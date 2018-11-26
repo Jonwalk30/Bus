@@ -56,8 +56,6 @@ public class Bus {
                         // Random chance of dropping students off
                         dropsRandomStudentOff(atBusStop());
 
-                        // System.out.println(atBusStop().waitingStudents.size());
-
                         // If I haven't been waiting for 5 seconds
                         if (secondsWaited < 5) {
                             // Stay here and increment how long I've been waiting
