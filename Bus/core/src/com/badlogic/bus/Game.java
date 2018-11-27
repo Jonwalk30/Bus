@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
@@ -78,6 +81,8 @@ public class Game extends ApplicationAdapter {
 
         staticSprites = new ArrayList<Sprite>();
 
+        BitmapFont font = new BitmapFont();
+
 	    for (Road road : bath.roads) {
 
 	        for (BusStop busStop : road.busStops) {
@@ -95,6 +100,25 @@ public class Game extends ApplicationAdapter {
 	    for (Sprite sprite : staticSprites) {
             sprite.draw(staticBatch);
         }
+
+        // Draw the number of people waiting at the stop to screen
+        for (Road road : bath.roads) {
+          for (BusStop busStop : road.busStops) {
+            float modifier = 45;
+            float xPos = ((w * (float) busStop.location(road).x)/100  - (w/50));
+            float yPos = ((h * (float) busStop.location(road).y)/100 - (h/80));
+            GlyphLayout layout = new GlyphLayout(
+              font,
+              Integer.toString(busStop.studentCnt()),
+              busStop.color(),
+              0,
+              Align.center,
+              false
+            );
+            font.draw(staticBatch, layout, xPos + modifier, yPos + modifier);
+          }
+        }
+
         staticBatch.end();
 
     }

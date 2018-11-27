@@ -3,6 +3,7 @@ package com.badlogic.bus;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +52,20 @@ public class BusStop {
 
     public double droppingOffRate() {
         return 5 * popularity;
+    }
+
+    /**
+     Get the color to be used when printing the number of people waiting at this
+     stop, based on the current number of people waiting here.
+     */
+    public Color color() {
+      if (this.studentCnt() < 5) {
+        return Color.GREEN;
+      } else if (this.studentCnt() < 10) {
+        return Color.ORANGE;
+      } else {
+        return Color.RED;
+      }
     }
 
 }
