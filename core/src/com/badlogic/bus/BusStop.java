@@ -59,13 +59,13 @@ public class BusStop {
      stop, based on the current number of people waiting here.
      */
     public Color color() {
-      if (this.studentCnt() < 5) {
-        return Color.GREEN;
-      } else if (this.studentCnt() < 10) {
-        return Color.ORANGE;
-      } else {
-        return Color.RED;
-      }
+        if (this.studentCnt() < 5) {
+            return Color.GREEN;
+        } else if (this.studentCnt() < 10) {
+            return Color.ORANGE;
+        } else {
+            return Color.RED;
+        }
     }
 
 }

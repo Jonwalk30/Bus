@@ -71,22 +71,22 @@ public class Bus {
                     } else {
                         move();
                     }
-                // Else move
+                    // Else move
                 } else {
                     // Random chance of dropping students off
                     dropsRandomStudentOff(atBusStop());
                     move();
                 }
-            // Else move
+                // Else move
             } else {
                 move();
             }
 
             // Else move
-        // Else if I'm at the end of a road, skip to the next road
+            // Else if I'm at the end of a road, skip to the next road
         } else if (roadPosition >= 99) {
             switchRoad(route);
-        // Else move
+            // Else move
         } else {
             move();
         }
