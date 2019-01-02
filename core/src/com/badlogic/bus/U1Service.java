@@ -62,7 +62,7 @@ public class U1Service {
                 "-",
                 new Location(90,50),
                 new Location(90,25),
-                (double) 10,
+                (double) 50,
                 tempBusStops,
                 tempBusStop1);
 
@@ -77,7 +77,7 @@ public class U1Service {
                 "-",
                 new Location(90,25),
                 new Location(90,50),
-                (double) 10,
+                (double) 50,
                 tempBusStops);
 
         return tempRoad;
@@ -107,7 +107,7 @@ public class U1Service {
                 "-",
                 new Location(90,25),
                 new Location(50,75),
-                (double) 10,
+                (double) 80,
                 tempBusStops);
 
         return tempRoad;
@@ -137,7 +137,7 @@ public class U1Service {
                 "-",
                 new Location(50,75),
                 new Location(90,25),
-                (double) 10,
+                (double) 80,
                 tempBusStops);
 
         return tempRoad;
@@ -155,7 +155,7 @@ public class U1Service {
                 "-",
                 new Location(50,75),
                 new Location(50,35),
-                (double) 10,
+                (double) 90,
                 tempBusStops);
 
         return tempRoad;
@@ -173,7 +173,7 @@ public class U1Service {
                 "-",
                 new Location(50,35),
                 new Location(50,75),
-                (double) 10,
+                (double) 90,
                 tempBusStops);
 
         return tempRoad;
@@ -191,7 +191,7 @@ public class U1Service {
                 "-",
                 new Location(50,35),
                 new Location(35,35),
-                (double) 10,
+                (double) 90,
                 tempBusStops);
 
         return tempRoad;
@@ -209,7 +209,7 @@ public class U1Service {
                 "-",
                 new Location(35,35),
                 new Location(50,35),
-                (double) 10,
+                (double) 90,
                 tempBusStops);
 
         return tempRoad;
@@ -227,7 +227,7 @@ public class U1Service {
                 "-",
                 new Location(35,35),
                 new Location(35,45),
-                (double) 10,
+                (double) 60,
                 tempBusStops);
 
         return tempRoad;
@@ -241,7 +241,7 @@ public class U1Service {
                 "-",
                 new Location(35,45),
                 new Location(35,35),
-                (double) 10,
+                (double) 60,
                 tempBusStops);
 
         return tempRoad;
@@ -259,7 +259,7 @@ public class U1Service {
                 "-",
                 new Location(35,45),
                 new Location(25,55),
-                (double) 10,
+                (double) 60,
                 tempBusStops);
 
         return tempRoad;
@@ -277,7 +277,7 @@ public class U1Service {
                 "-",
                 new Location(25,55),
                 new Location(35,45),
-                (double) 10,
+                (double) 60,
                 tempBusStops);
 
         return tempRoad;
@@ -295,7 +295,7 @@ public class U1Service {
                 "-",
                 new Location(25,55),
                 new Location(20,35),
-                (double) 10,
+                (double) 50,
                 tempBusStops);
 
         return tempRoad;
@@ -317,7 +317,7 @@ public class U1Service {
                 "-",
                 new Location(20,35),
                 new Location(10,45),
-                (double) 10,
+                (double) 50,
                 tempBusStops);
 
         return tempRoad;
@@ -331,7 +331,7 @@ public class U1Service {
                 "-",
                 new Location(10,45),
                 new Location(12,55),
-                (double) 10,
+                (double) 50,
                 tempBusStops);
 
         return tempRoad;
@@ -353,7 +353,7 @@ public class U1Service {
                 "-",
                 new Location(12,55),
                 new Location(25,55),
-                (double) 10,
+                (double) 50,
                 tempBusStops);
 
         return tempRoad;

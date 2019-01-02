@@ -42,8 +42,6 @@ public class Bus {
 
     public void simulateASecond(BusRoute route) {
 
-        System.out.println(ID);
-
         // If I'm at a bus stop
         if (isAtBusStop()) {
             handleAtBusStop(route);
@@ -53,7 +51,7 @@ public class Bus {
             // Else move
         } else {
             totalSecondsWaited = 0;
-            move();
+            move(route);
         }
 
     }
@@ -61,27 +59,24 @@ public class Bus {
     private void handleAtBusStop(BusRoute route) {
 
         // If there aren't any buses already here,
-        if (!busAlreadyWaiting(route)) {
-            handleNoBusesAlreadyHere();
+        if (!busAlreadyWaiting(route) || atBusStop() instanceof DestBusStop) {
+            handleNoBusesAlreadyHere(route);
             // Else move
         } else {
             totalSecondsWaited = 0;
-            move();
+            move(route);
         }
     }
 
-    private void handleNoBusesAlreadyHere() {
+    private void handleNoBusesAlreadyHere(BusRoute route) {
 
         if ((totalSecondsWaited == 0 || studentsLeftToDropOff > 0) && studentCnt() > 0) {
-            System.out.println("Dropping off");
             handleDropOff();
         } else if (studentsLeftToDropOff == 0 && !full() && atBusStop().studentCnt() > 0) {
-            System.out.println("Picking up");
             handlePickUp();
         } else {
-            System.out.println("Moving");
             totalSecondsWaited = 0;
-            move();
+            move(route);
         }
     }
 
@@ -105,20 +100,16 @@ public class Bus {
     private void handleDropOff() {
 
         if (atBusStop() instanceof DestBusStop) {
-            System.out.println("At a destination bus stop");
             students.remove(students.size() - 1);
             studentsLeftToDropOff = students.size();
             totalSecondsWaited++;
         } else if (totalSecondsWaited == 0) {
             studentsLeftToDropOff = (int) (atBusStop().droppingOffRate() * studentCnt());
-            System.out.println("Gonna drop off " + studentsLeftToDropOff + " students");
             totalSecondsWaited++;
         } else if (studentsLeftToDropOff > 0) {
-            System.out.println("Dropping a student off");
             totalSecondsWaited++;
             students.remove(students.size() - 1);
             studentsLeftToDropOff--;
-            System.out.println("Just " + studentsLeftToDropOff + " left now");
         }
     }
 
@@ -127,8 +118,8 @@ public class Bus {
         for (Bus bus : route.buses) {
             if (bus.ID != this.ID &&
                     bus.currentRoad.equals(this.currentRoad) &&
-                    this.roadPosition <= bus.roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2  &&
-                    this.roadPosition > bus.roadPosition - (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2) {
+                    this.roadPosition <= bus.roadPosition + maxMoveIncrement()/2  &&
+                    this.roadPosition > bus.roadPosition - maxMoveIncrement()/2) {
                 if (bus.totalSecondsWaited > 0) {
                     return true;
                 }
@@ -139,8 +130,8 @@ public class Bus {
 
     public boolean isAtBusStop() {
         for (BusStop stop : currentRoad.busStops) {
-            if (this.roadPosition <= stop.roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2  &&
-                    this.roadPosition > stop.roadPosition - (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2) {
+            if (this.roadPosition <= stop.roadPosition + maxMoveIncrement()/2  &&
+                    this.roadPosition > stop.roadPosition - maxMoveIncrement()/2) {
                 return true;
             }
         }
@@ -157,10 +148,10 @@ public class Bus {
         return null;
     }
 
-    public void move() {
+    public void move(BusRoute route) {
         secondsWaited = 0;
         totalSecondsWaited = 0;
-        roadPosition = roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100);
+        roadPosition = roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic(route.time))/100);
     }
 
     public void switchRoad(BusRoute route) {

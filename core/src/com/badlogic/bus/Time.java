@@ -31,4 +31,13 @@ public class Time {
         }
     }
 
+    public int minutesPastMidnight() {
+        return 60*hour + minute;
+    }
+
+    public String toString() {
+        return this.hour+":"+this.minute+":"+this.second;
+    }
+
+
 }

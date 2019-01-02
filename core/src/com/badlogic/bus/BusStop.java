@@ -52,6 +52,8 @@ public class BusStop {
     }
 
     public double droppingOffRate() {
+        // Should be somewhat random
+        // Gaussian around DOPopularity
         return DOPopularity / 100;
     }
 
