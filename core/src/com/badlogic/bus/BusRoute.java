@@ -20,7 +20,7 @@ public class BusRoute {
         }
         for(Road road : roads) {
             for (BusStop stop : road.busStops) {
-                stop.studentRocksUp();
+                stop.studentRocksUp(this.time);
             }
         }
         this.time.increment();

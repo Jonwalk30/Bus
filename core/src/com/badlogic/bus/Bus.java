@@ -13,9 +13,8 @@ public class Bus {
     public ArrayList<Student> students = new ArrayList<Student>();
     public Road currentRoad;
     public double roadPosition = 0;
-    public double speed = 0;
     // Converted from miles per hour
-    public double baseSpeed = 0.02;
+    public double baseSpeed = 0.25;
     public int secondsWaited = 0;
     public int totalSecondsWaited = 0;
     public int studentsLeftToDropOff = 0;
@@ -175,7 +174,7 @@ public class Bus {
     }
 
     public double maxMoveIncrement() {
-        return 100*((baseSpeed*100)/currentRoad.length());
+        return 100*(baseSpeed/currentRoad.length());
     }
 
     public boolean full() {
