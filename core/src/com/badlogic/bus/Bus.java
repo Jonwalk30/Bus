@@ -1,5 +1,6 @@
 package com.badlogic.bus;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Bus {
     public double baseSpeed = 0.02;
     public int secondsWaited = 0;
     public int totalSecondsWaited = 0;
-    public boolean waiting = false;
+    public int studentsLeftToDropOff = 0;
 
     public Texture image;
 
@@ -41,65 +42,94 @@ public class Bus {
 
     public void simulateASecond(BusRoute route) {
 
+        System.out.println(ID);
+
         // If I'm at a bus stop
         if (isAtBusStop()) {
-
-            // If there aren't any buses already here,
-            if (!busAlreadyWaiting(route)) {
-
-                // If the bus isn't full
-                if (!full()) {
-                    waiting = true;
-                    // If there are students here
-                    if (atBusStop().studentCnt() > 0) {
-
-                        // Random chance of dropping students off
-                        dropsRandomStudentOff(atBusStop());
-
-                        // If I haven't been waiting for 5 seconds
-                        if (secondsWaited < 5) {
-                            // Stay here and increment how long I've been waiting
-                            secondsWaited++;
-                            totalSecondsWaited++;
-                        } else {
-                            // Load a student on board and remove them from the bus stop
-                            students.add(atBusStop().waitingStudents.get(atBusStop().waitingStudents.size()-1));
-                            atBusStop().waitingStudents.remove(atBusStop().waitingStudents.size()-1);
-                            secondsWaited = 0;
-                            totalSecondsWaited++;
-                        }
-                    } else {
-                        move();
-                    }
-                    // Else move
-                } else {
-                    // Random chance of dropping students off
-                    dropsRandomStudentOff(atBusStop());
-                    move();
-                }
-                // Else move
-            } else {
-                move();
-            }
-
-            // Else move
+            handleAtBusStop(route);
             // Else if I'm at the end of a road, skip to the next road
         } else if (roadPosition >= 99) {
             switchRoad(route);
             // Else move
         } else {
+            totalSecondsWaited = 0;
             move();
         }
 
     }
 
+    private void handleAtBusStop(BusRoute route) {
+
+        // If there aren't any buses already here,
+        if (!busAlreadyWaiting(route)) {
+            handleNoBusesAlreadyHere();
+            // Else move
+        } else {
+            totalSecondsWaited = 0;
+            move();
+        }
+    }
+
+    private void handleNoBusesAlreadyHere() {
+
+        if ((totalSecondsWaited == 0 || studentsLeftToDropOff > 0) && studentCnt() > 0) {
+            System.out.println("Dropping off");
+            handleDropOff();
+        } else if (studentsLeftToDropOff == 0 && !full() && atBusStop().studentCnt() > 0) {
+            System.out.println("Picking up");
+            handlePickUp();
+        } else {
+            System.out.println("Moving");
+            totalSecondsWaited = 0;
+            move();
+        }
+    }
+
+    private void handlePickUp() {
+
+        // If I haven't been waiting for 5 seconds
+        if (secondsWaited < 5) {
+            // Stay here and increment how long I've been waiting
+            secondsWaited++;
+            totalSecondsWaited++;
+        } else {
+            // Load a student on board and remove them from the bus stop
+            students.add(atBusStop().waitingStudents.get(atBusStop().studentCnt() - 1));
+            atBusStop().waitingStudents.remove(atBusStop().studentCnt() - 1);
+            secondsWaited = 0;
+            totalSecondsWaited++;
+        }
+
+    }
+
+    private void handleDropOff() {
+
+        if (atBusStop() instanceof DestBusStop) {
+            System.out.println("At a destination bus stop");
+            students.remove(students.size() - 1);
+            studentsLeftToDropOff = students.size();
+            totalSecondsWaited++;
+        } else if (totalSecondsWaited == 0) {
+            studentsLeftToDropOff = (int) (atBusStop().droppingOffRate() * studentCnt());
+            System.out.println("Gonna drop off " + studentsLeftToDropOff + " students");
+            totalSecondsWaited++;
+        } else if (studentsLeftToDropOff > 0) {
+            System.out.println("Dropping a student off");
+            totalSecondsWaited++;
+            students.remove(students.size() - 1);
+            studentsLeftToDropOff--;
+            System.out.println("Just " + studentsLeftToDropOff + " left now");
+        }
+    }
+
     public boolean busAlreadyWaiting(BusRoute route) {
+
         for (Bus bus : route.buses) {
             if (bus.ID != this.ID &&
                     bus.currentRoad.equals(this.currentRoad) &&
-                    this.roadPosition <= bus.roadPosition + maxMoveIncrement()/2  &&
-                    this.roadPosition > bus.roadPosition - maxMoveIncrement()/2) {
-                if (bus.waiting) {
+                    this.roadPosition <= bus.roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2  &&
+                    this.roadPosition > bus.roadPosition - (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2) {
+                if (bus.totalSecondsWaited > 0) {
                     return true;
                 }
             }
@@ -107,11 +137,10 @@ public class Bus {
         return false;
     }
 
-
     public boolean isAtBusStop() {
         for (BusStop stop : currentRoad.busStops) {
-            if (this.roadPosition <= stop.roadPosition + maxMoveIncrement()/2  &&
-                    this.roadPosition > stop.roadPosition - maxMoveIncrement()/2) {
+            if (this.roadPosition <= stop.roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2  &&
+                    this.roadPosition > stop.roadPosition - (maxMoveIncrement()*(100-currentRoad.traffic())/100)/2) {
                 return true;
             }
         }
@@ -128,25 +157,7 @@ public class Bus {
         return null;
     }
 
-    public boolean isAtDestBusStop() {
-        if (this.roadPosition <= currentRoad.destBusStop.roadPosition + maxMoveIncrement()/2  &&
-                this.roadPosition > currentRoad.destBusStop.roadPosition - maxMoveIncrement()/2) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean atDestBusStop() {
-        if (this.roadPosition <= currentRoad.destBusStop.roadPosition + maxMoveIncrement()/2  &&
-                this.roadPosition > currentRoad.destBusStop.roadPosition - maxMoveIncrement()/2) {
-            return true;
-        }
-        return false;
-    }
-
-
     public void move() {
-        waiting = true;
         secondsWaited = 0;
         totalSecondsWaited = 0;
         roadPosition = roadPosition + (maxMoveIncrement()*(100-currentRoad.traffic())/100);
@@ -155,7 +166,6 @@ public class Bus {
     public void switchRoad(BusRoute route) {
 
         roadPosition = 0;
-        waiting = true;
         secondsWaited = 0;
         totalSecondsWaited = 0;
 
@@ -181,17 +191,16 @@ public class Bus {
         return (studentCnt() == capacity);
     }
 
-    public void dropsRandomStudentOff(BusStop stop) {
-        Random r = new Random();
-        int n;
-        n = r.nextInt( (int) (stop.droppingOffRate()));
-        if(n < 100) {
-            if(studentCnt() > 0) {
-                students.remove(students.size() - 1);
-            }
+    //public boolean sameRoadPositionAs(Bus bus) {}
+
+    public Color color() {
+        if (this.studentCnt() < 50) {
+            return Color.GREEN;
+        } else if (this.studentCnt() < 75) {
+            return Color.ORANGE;
+        } else {
+            return Color.RED;
         }
     }
-
-    //public boolean sameRoadPositionAs(Bus bus) {}
 
 }

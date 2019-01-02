@@ -5,8 +5,9 @@ build.gradle
 *.iml
 *.bat
 *.class
+*.xml
 gradlew
 settings.gradle
 local.properties
-/core/out/
+/core/out/*
 /core/build.gradle

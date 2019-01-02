@@ -87,6 +87,13 @@ public class Game extends ApplicationAdapter {
             sprite.draw(staticBatch);
         }
 
+        drawWaitingStudents(w, h, font);
+
+        staticBatch.end();
+
+    }
+
+    private void drawWaitingStudents(float w, float h, BitmapFont font) {
         // Draw the number of people waiting at the stop to screen
         for (Road road : bath.busRoute.roads) {
             for (BusStop busStop : road.busStops) {
@@ -104,15 +111,14 @@ public class Game extends ApplicationAdapter {
                 font.draw(staticBatch, layout, xPos + modifier, yPos + modifier);
             }
         }
-
-        staticBatch.end();
-
     }
 
     private void drawMobileBatch() {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+
+        BitmapFont font = new BitmapFont();
 
         ArrayList<Sprite> mobileSprites = new ArrayList<Sprite>();
 
@@ -129,8 +135,28 @@ public class Game extends ApplicationAdapter {
         for (Sprite sprite : mobileSprites) {
             sprite.draw(mobileBatch);
         }
+        drawTravellingStudents(w, h, font);
+
         mobileBatch.end();
 
+    }
+
+    private void drawTravellingStudents(float w, float h, BitmapFont font) {
+        // Draw the number of people sat on each bus
+        for (Bus bus : bath.busRoute.buses) {
+            float modifier = 30;
+            float xPos = (((w * (float) bus.location().x)/100) - (w/50));
+            float yPos = (((h * (float) bus.location().y)/100) - (h/30));
+            GlyphLayout layout = new GlyphLayout(
+                    font,
+                    Integer.toString(bus.studentCnt()),
+                    bus.color(),
+                    0,
+                    Align.center,
+                    false
+            );
+            font.draw(mobileBatch, layout, xPos - modifier, yPos - modifier);
+        }
     }
 
 

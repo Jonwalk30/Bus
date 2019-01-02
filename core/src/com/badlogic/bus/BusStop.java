@@ -51,7 +51,7 @@ public class BusStop {
     }
 
     public double droppingOffRate() {
-        return 5 * popularity;
+        return popularity / 100;
     }
 
     /**

@@ -34,8 +34,8 @@ public class U1Service {
         roads.add(norwoodAveBack());
 
         buses.add(new Bus(1, 100, norwoodAve(), busImg));
-        buses.add(new Bus(1, 100, greenPark(), busImg));
-        buses.add(new Bus(1, 100, clavertonStBack(), busImg));
+        buses.add(new Bus(2, 100, greenPark(), busImg));
+        buses.add(new Bus(3, 100, clavertonStBack(), busImg));
 
         busRoute = new BusRoute(
                 roads,
