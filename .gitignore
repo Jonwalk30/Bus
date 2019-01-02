@@ -11,3 +11,4 @@ settings.gradle
 local.properties
 /core/out/*
 /core/build.gradle
+.gradle/
