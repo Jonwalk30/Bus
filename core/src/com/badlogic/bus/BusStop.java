@@ -6,20 +6,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BusStop {
 
     public String name;
-    public double popularity;
+    public double RUPopularity;
+    public double DOPopularity;
     public double roadPosition;
     public ArrayList<Student> waitingStudents = new ArrayList<Student>();
 
     public Texture image;
 
-    public BusStop(String name, double popularity, double roadPosition, Texture image) {
+    public BusStop(String name, double RUPopularity, double DOPopularity, double roadPosition, Texture image) {
         this.name = name;
-        this.popularity = popularity;
+        this.RUPopularity = RUPopularity;
+        this.DOPopularity = DOPopularity;
         this.roadPosition = roadPosition;
         this.image = image;
     }
@@ -47,11 +48,11 @@ public class BusStop {
     }
 
     public double rockingUpRate() {
-        return 5 * popularity;
+        return 5 * RUPopularity;
     }
 
     public double droppingOffRate() {
-        return popularity / 100;
+        return DOPopularity / 100;
     }
 
     /**
