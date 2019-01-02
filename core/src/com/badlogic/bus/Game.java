@@ -5,13 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -89,7 +90,28 @@ public class Game extends ApplicationAdapter {
 
         drawWaitingStudents(w, h, font);
 
+        drawClock(w, h, font);
+
         staticBatch.end();
+
+    }
+
+    private void drawClock(float w, float h, BitmapFont font) {
+
+        float xPos = w * (float) 0.1;
+        float yPos = h * (float) 0.9;
+
+        String timeAsString = bath.busRoute.time.hour+":"+bath.busRoute.time.minute+":"+bath.busRoute.time.second;
+
+        GlyphLayout layout = new GlyphLayout(
+                font,
+                timeAsString,
+                Color.BLACK,
+                0,
+                Align.center,
+                false
+        );
+        font.draw(staticBatch, layout, xPos, yPos);
 
     }
 
@@ -175,7 +197,6 @@ public class Game extends ApplicationAdapter {
         if (TimeUtils.timeSinceNanos(startCounter) > timeBetweenSeconds) {
 
             bath.busRoute.simulateASecond();
-            U1Service.startTime.increment();
 
             startCounter = TimeUtils.nanoTime();
         }

@@ -23,5 +23,6 @@ public class BusRoute {
                 stop.studentRocksUp();
             }
         }
+        this.time.increment();
     }
 }

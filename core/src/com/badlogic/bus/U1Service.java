@@ -10,7 +10,7 @@ public class U1Service {
     private ArrayList<Road> roads = new ArrayList<Road>();
     private ArrayList<Bus> buses = new ArrayList<Bus>();
 
-    public static Time startTime = new Time(0,0,0);
+    public Time startTime = new Time(0,0,0);
     public static Texture busImg = new Texture("bus.png");
     public static Texture busStopImg = new Texture("bus stop.png");
 
