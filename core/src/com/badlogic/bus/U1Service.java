@@ -10,7 +10,7 @@ public class U1Service {
     private ArrayList<Road> roads = new ArrayList<Road>();
     private ArrayList<Bus> buses = new ArrayList<Bus>();
 
-    public Time startTime = new Time(9,0,0);
+    public Time startTime = new Time(6,0,0);
     public static Texture busImg = new Texture("bus.png");
     public static Texture busStopImg = new Texture("bus stop.png");
 
@@ -34,8 +34,15 @@ public class U1Service {
         roads.add(norwoodAveBack());
 
         buses.add(new Bus(1, 100, norwoodAve(), busImg));
-        buses.add(new Bus(2, 100, greenPark(), busImg));
-        buses.add(new Bus(3, 100, clavertonStBack(), busImg));
+        buses.add(new Bus(2, 100, bathwickRoad(), busImg));
+        buses.add(new Bus(3, 100, clavertonSt(), busImg));
+        buses.add(new Bus(4, 100, ambury(), busImg));
+        buses.add(new Bus(5, 100, westmorelandRoad(), busImg));
+        buses.add(new Bus(6, 100, broughamHayes(), busImg));
+        buses.add(new Bus(7, 100, greenParkBack(), busImg));
+        buses.add(new Bus(8, 100, clavertonStBack(), busImg));
+        buses.add(new Bus(9, 100, pultneyRoadBack(), busImg));
+        buses.add(new Bus(10, 100, bathwickRoadBack(), busImg));
 
         busRoute = new BusRoute(
                 roads,
@@ -54,7 +61,7 @@ public class U1Service {
 
         tempBusStops.add(tempBusStop1);
 
-        BusStop tempAveBusStop2 = new BusStop("-", 10, 10, 50, 100, busStopImg);
+        BusStop tempAveBusStop2 = new BusStop("-", 2, 10, 50, 100, busStopImg);
 
         tempBusStops.add(tempAveBusStop2);
 
@@ -87,19 +94,19 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,20, 100, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 2, 2,20, 100, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,25, 92, busStopImg);
+        tempAveBusStop = new BusStop("-", 2, 2,25, 92, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,50, 84, busStopImg);
+        tempAveBusStop = new BusStop("-", 2, 5,50, 84, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,75, 78, busStopImg);
+        tempAveBusStop = new BusStop("-", 2, 15,75, 78, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -117,19 +124,19 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,5, 30, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 50, 5,5, 30, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,35, 22, busStopImg);
+        tempAveBusStop = new BusStop("-", 10, 5,35, 22, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,65, 14,busStopImg);
+        tempAveBusStop = new BusStop("-", 5, 5,65, 14,busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,95, 6, busStopImg);
+        tempAveBusStop = new BusStop("-", 2, 40,95, 6, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -147,7 +154,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,75, 70, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 2, 20,75, 70, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -165,7 +172,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,5, 35, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 20, 2,5, 35, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -183,7 +190,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,75, 65, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 4, 10,75, 65, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -201,7 +208,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,30, 42, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 15, 2,30, 42, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -219,7 +226,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,75, 62, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 10, 50,75, 62, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -251,7 +258,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,90, 55, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 5, 10,90, 55, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -269,7 +276,11 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,80, 45, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 30, 2,10, 55, busStopImg);
+
+        tempBusStops.add(tempAveBusStop);
+
+        tempAveBusStop = new BusStop("-", 50, 10,80, 45, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -287,7 +298,7 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,70, 52, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 10, 15,70, 52, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -309,7 +320,7 @@ public class U1Service {
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,60, 47, busStopImg);
+        tempAveBusStop = new BusStop("LO", 50, 90,60, 47, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
@@ -341,11 +352,11 @@ public class U1Service {
 
         ArrayList<BusStop> tempBusStops = new ArrayList<BusStop>();
 
-        BusStop tempAveBusStop = new BusStop("-", 10, 10,10, 47, busStopImg);
+        BusStop tempAveBusStop = new BusStop("-", 20, 20,10, 47, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 
-        tempAveBusStop = new BusStop("-", 10, 10,40, 46, busStopImg);
+        tempAveBusStop = new BusStop("-", 10, 2,40, 46, busStopImg);
 
         tempBusStops.add(tempAveBusStop);
 

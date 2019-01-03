@@ -85,10 +85,12 @@ public class BusStop {
         popularity *= 100;
         popularity += background;
 
-        if (t.second == 0) {
+        if (t.second == 0 && this.name == "LO") {
           System.out.println(t.toString());
           System.out.println(popularity);
         }
+
+        popularity *= RUPopularity/100;
 
         return popularity < 100 ? popularity : 100;
     }

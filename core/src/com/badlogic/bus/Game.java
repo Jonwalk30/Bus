@@ -4,10 +4,20 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
@@ -16,7 +26,12 @@ public class Game extends ApplicationAdapter {
     private SpriteBatch staticBatch;
     private SpriteBatch mobileBatch;
 
+    private Stage stage;
+    private Texture hikeTexture;
+    private Texture hikeTexturePressed;
+    private ImageButton hikeButton;
     private U1Service bath;
+    boolean paused = true;
 
     private long startCounter = 0;
 
@@ -29,9 +44,56 @@ public class Game extends ApplicationAdapter {
         mobileBatch = new SpriteBatch();
 
         bath = new U1Service();
+        implementButton();
 
         drawStaticBatch();
 
+    }
+
+    private void implementButton() {
+        //make a stage for your button to go on
+        stage = new Stage();
+
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+
+        hikeTexture = new Texture(Gdx.files.internal("play.png"));
+        hikeTexturePressed = new Texture(Gdx.files.internal("pause.png"));
+
+        hikeButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(hikeTexture))
+        );
+
+        hikeButton.setBounds((float) 0.1*w, (float) 0.85*h,  (float) 0.05*w, (float) 0.05*w);
+
+        hikeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                System.out.println("hello");
+                float w = Gdx.graphics.getWidth();
+                float h = Gdx.graphics.getHeight();
+                stage = new Stage();
+                if (paused) {
+                    paused = false;
+                    hikeButton = new ImageButton(
+                            new TextureRegionDrawable(new TextureRegion(hikeTexturePressed))
+                    );
+                } else {
+                    paused = true;
+                    hikeButton = new ImageButton(
+                            new TextureRegionDrawable(new TextureRegion(hikeTexture))
+                    );
+                }
+                hikeButton.setBounds((float) 0.1*w, (float) 0.85*h,  (float) 0.05*w, (float) 0.05*w);
+                stage.addActor(hikeButton);
+
+            }
+        });
+
+        stage.addActor(hikeButton);
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     private void drawLines() {
@@ -93,7 +155,7 @@ public class Game extends ApplicationAdapter {
 
     private void drawClock(float w, float h, BitmapFont font) {
 
-        float xPos = w * (float) 0.1;
+        float xPos = w * (float) 0.9;
         float yPos = h * (float) 0.9;
 
         GlyphLayout layout = new GlyphLayout(
@@ -185,13 +247,17 @@ public class Game extends ApplicationAdapter {
         drawStaticBatch();
         drawMobileBatch();
 
+        stage.draw();
+
         // 1 billion nanoseconds = 1 sec.
-        long timeBetweenSeconds = 100000;
-        if (TimeUtils.timeSinceNanos(startCounter) > timeBetweenSeconds) {
+        if (!paused){
+            long timeBetweenSeconds = 10000;
+            if (TimeUtils.timeSinceNanos(startCounter) > timeBetweenSeconds) {
 
-            bath.busRoute.simulateASecond();
+                bath.busRoute.simulateASecond();
 
-            startCounter = TimeUtils.nanoTime();
+                startCounter = TimeUtils.nanoTime();
+            }
         }
 
     }
